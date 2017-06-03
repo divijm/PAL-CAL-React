@@ -14,20 +14,22 @@ class App extends Component {
       events: []
     }
   }
+
   componentDidMount () {
     getEvents((events) => {
       this.setState({events})
     })
   }
+
   render() {
     return (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <h2>PAL CAL</h2>
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          Find out your times for all the PAL classes this week!
         </p>
         <BigCalendar
            style={{height: '420px'}}
