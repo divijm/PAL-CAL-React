@@ -6,6 +6,10 @@ import {
 } from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
+import { getSessions } from './getSessions'
+import axios from 'axios';
+// import { getEvents } from './gcalAjax'
+// import gcalAjax from './gcalAjax';
 import moment from 'moment';
 // import gcal, { checkAuth, handleAuthResult, handleAuthClick, loadCalenderApi, addEvents, appendPre } from './gcal'
 // import gauth from './Gauth'
@@ -18,11 +22,19 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-      events: []
+      events: [],
+      token: ''
     }
   };
 
   componentDidMount () {
+    this.setState(
+      {
+        events: getSessions()
+      }
+    )
+
+
   };
 
   render() {
@@ -55,7 +67,9 @@ class App extends Component {
 
         <BigCalendar
            style={{height: '420px'}}
-           events={this.state.events}
+           events=
+           {this.state.events.data.description}
+           {this.state.events.data.items[1].start.dateTime}
          />
 
          <br/>
@@ -71,14 +85,17 @@ const API = ({ match }) => (
   <div>
     <h3>ID: {match.params.id}</h3>
     {
-      (match.params.id === "calendar") ?(
-        <div>
-          Type in url the following: <strong>https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=(access_token)</strong> <br/><br/>
-          <em>Where (access_token) is what comes after &access_token= (and before &token_type=) in your current URL</em>
-        </div>
-      ) : (
-        null
-      )
+      (match.params.id === "calendar") ?
+        (
+          <div>
+            Type in url the following: <strong>https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=(access_token)</strong> <br/><br/>
+            <em>Where (access_token) is what comes after &access_token= (and before &token_type=) in your current URL</em>
+          </div>
+        )
+        :
+        (
+          null
+        )
     }
   </div>
 );

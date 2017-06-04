@@ -1,9 +1,9 @@
 import request from 'superagent';
 import gapi from 'gapi';
 
-const CLIENT_ID = '462177041743-r4mnpj9qrp34j8kvotritqalutha8rfb.apps.googleusercontent.com';
+const CLIENT_ID = '127111398025-hn20jreib1o4ndbmm7ttra6vihq6foj9.apps.googleusercontent.com';
 
-const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly'];
 
 function checkAuth() {
   gapi.auth.authorize(
