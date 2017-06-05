@@ -4,18 +4,13 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import logo from './logo.svg';
-import './App.css';
-import { getSessions } from './getSessions'
+import logo from './images/logo.svg';
+import './styles/App.css';
+// import { getSessions } from './api/getSessions'
 import axios from 'axios';
-// import { getEvents } from './gcalAjax'
-// import gcalAjax from './gcalAjax';
 import moment from 'moment';
-// import gcal, { checkAuth, handleAuthResult, handleAuthClick, loadCalenderApi, addEvents, appendPre } from './gcal'
-// import gauth from './Gauth'
 import BigCalendar from 'react-big-calendar';
 BigCalendar.momentLocalizer(moment)
-
 
 class App extends Component {
 
@@ -23,19 +18,84 @@ class App extends Component {
     super()
     this.state = {
       events: [],
+      accg100events: [],
+      econ111events: [],
+      accg224events: [],
+      busl250events: [],
+      acst201events: [],
       token: ''
     }
   };
 
   componentDidMount () {
-    this.setState(
-      {
-        events: getSessions()
-      }
-    )
+    // this.setState(
+    //   {
+    //     events: getSessions()
+    //   }
+    // )
+        // const CALENDAR_ID = 'jobiutcic5qpiel03g3hkfb93o@group.calendar.google.com'
+        // const API_KEY = 'AIzaSyBteIj_7PN1MbEzUEi4kplvCvfs5i4pNjY'
+        // const URL = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}`
+    const GCAL_URL = 'https://www.googleapis.com/calendar/v3/calendars/';
+    const API_KEY = '@group.calendar.google.com/events?key=AIzaSyBteIj_7PN1MbEzUEi4kplvCvfs5i4pNjY';
 
+    const ACCG100_CAL = `${GCAL_URL}oa760bp1ddcalm3e2atkq9rhig${API_KEY}`;
+    const ECON111_CAL = `${GCAL_URL}jobiutcic5qpiel03g3hkfb93o${API_KEY}`;
+    const ACCG224_CAL = `${GCAL_URL}jurp0e5kolh0mrj3iui17u6i28${API_KEY}`;
+    const BUSL250_CAL = `${GCAL_URL}6ol66rcit5mb7mkjm44hr7kgas${API_KEY}`;
+    const ACST201_CAL = `${GCAL_URL}2c8kh2jiobjmdvidkchvf8138g${API_KEY}`;
+    // set all these. put into array of objects
+    // loop over array and do axios call multiple times
+    // save values to state
 
+    axios.all([
+      axios.get(ACCG100_CAL),
+      axios.get(ECON111_CAL),
+      axios.get(ACCG224_CAL),
+      axios.get(BUSL250_CAL),
+      axios.get(ACST201_CAL),
+    ])
+
+    // .then(response => {
+    //   console.log(response)
+    // })
+    .then(axios.spread((accg100, econ111, accg224, busl250, acst201) => {
+        // let events = accg100.data.concat(econ111.data);
+      let accg100events = accg100.data.items;
+      let econ111events = econ111.data.items;
+      let accg224events = accg224.data.items;
+      let busl250events = busl250.data.items;
+      let acst201events = acst201.data.items;
+
+      // console.log(events);
+      this.setState({
+        accg100events: accg100events,
+        econ111events: econ111events,
+        accg224events: accg224events,
+        busl250events: busl250events,
+        acst201events: acst201events,
+      })
+      console.log(accg100events);
+      console.log(econ111events);
+      console.log(accg224events);
+      console.log(busl250events);
+      console.log(acst201events);
+    }))
+    // .then(response => this.setState({ vehicles: response.data }))
+    .catch(error => console.log(error));
   };
+        //
+        // axios({
+        //   method: 'get',
+        //   url: [QUERY, QUERY2]
+        // })
+        //   .then(response => {
+        //     console.log(response)
+        //     // return(response)
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
 
   render() {
     return (
@@ -50,8 +110,6 @@ class App extends Component {
             <ul>
               <p><Link to="/home">Home</Link></p>
               <p><Link to="/about">About</Link></p>
-              <p><a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcalendar&response_type=token&prompt=consent&client_id=127111398025-hn20jreib1o4ndbmm7ttra6vihq6foj9.apps.googleusercontent.com">API OAUTH2 Authenticate</a></p>
-              <p><Route path="/:id" component={API}/></p>
             </ul>
           </div>
         </Router>
@@ -67,9 +125,9 @@ class App extends Component {
 
         <BigCalendar
            style={{height: '420px'}}
-           events=
-           {this.state.events.data.description}
-           {this.state.events.data.items[1].start.dateTime}
+           events={this.state.events}
+          //  {this.state.events.data.description}
+          //  {this.state.events.data.items[1].start.dateTime}
          />
 
          <br/>
@@ -80,24 +138,5 @@ class App extends Component {
     );
   }
 };
-
-const API = ({ match }) => (
-  <div>
-    <h3>ID: {match.params.id}</h3>
-    {
-      (match.params.id === "calendar") ?
-        (
-          <div>
-            Type in url the following: <strong>https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=(access_token)</strong> <br/><br/>
-            <em>Where (access_token) is what comes after &access_token= (and before &token_type=) in your current URL</em>
-          </div>
-        )
-        :
-        (
-          null
-        )
-    }
-  </div>
-);
 
 export default App;
