@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
-import logo from './images/logo.svg';
-import './styles/App.css';
-// import { getSessions } from './api/getSessions'
-import axios from 'axios';
-import moment from 'moment';
-import BigCalendar from 'react-big-calendar';
-BigCalendar.momentLocalizer(moment)
 
-class App extends Component {
+class Calender extends Component {
 
   constructor () {
     super()
@@ -28,14 +16,6 @@ class App extends Component {
   };
 
   componentDidMount () {
-    // this.setState(
-    //   {
-    //     events: getSessions()
-    //   }
-    // )
-        // const CALENDAR_ID = 'jobiutcic5qpiel03g3hkfb93o@group.calendar.google.com'
-        // const API_KEY = 'AIzaSyBteIj_7PN1MbEzUEi4kplvCvfs5i4pNjY'
-        // const URL = `https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events?key=${API_KEY}`
     const GCAL_URL = 'https://www.googleapis.com/calendar/v3/calendars/';
     const API_KEY = '@group.calendar.google.com/events?key=AIzaSyBteIj_7PN1MbEzUEi4kplvCvfs5i4pNjY';
 
@@ -56,11 +36,7 @@ class App extends Component {
       axios.get(ACST201_CAL),
     ])
 
-    // .then(response => {
-    //   console.log(response)
-    // })
     .then(axios.spread((accg100, econ111, accg224, busl250, acst201) => {
-        // let events = accg100.data.concat(econ111.data);
         let accg100events = [];
         let econ111events = [];
         let accg224events = [];
@@ -114,8 +90,8 @@ class App extends Component {
         title: event.summary,
         description: event.description,
         location: event.location
+        });
       });
-    });
 
       busl250.data.items.map(event => {
       let sTime = event.start.date || event.start.dateTime;
@@ -146,9 +122,8 @@ class App extends Component {
         title: event.summary,
         description: event.description,
         location: event.location
+        });
       });
-    });
-
       // console.log(events);
       // this.setState({
       //   accg100events: accg100events,
@@ -163,65 +138,18 @@ class App extends Component {
       console.log(busl250events);
       console.log(acst201events);
     }))
-    // .then(response => this.setState({ vehicles: response.data }))
     .catch(error => console.log(error));
   };
-        //
-        // axios({
-        //   method: 'get',
-        //   url: [QUERY, QUERY2]
-        // })
-        //   .then(response => {
-        //     console.log(response)
-        //     // return(response)
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>PAL CAL</h2>
-        </div>
-
-        <Router>
-          <div>
-            <ul>
-              <p><Link to="/home">Home</Link></p>
-              <p><Link to="/about">About</Link></p>
-            </ul>
-          </div>
-        </Router>
-
-        <p className="App-intro">
-          Find out your times for all the PAL classes this week!
-        </p>
-
-        <br/>
-        <hr/>
-        <br/>
-        <br/>
-
+      <div className="Calender">
         <BigCalendar
            popup
            style={{height: '800px'}}
            events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
-
-
-          //  {this.state.events.data.description}
-          //  {this.state.events.data.items[1].start.dateTime}
          />
-
-         <br/>
-         <br/>
-         <hr/>
-
      </div>
     );
-  }
+  };
 };
-
-export default App;
