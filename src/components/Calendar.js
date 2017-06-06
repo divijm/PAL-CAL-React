@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import BigCalendar from 'react-big-calendar';
+BigCalendar.momentLocalizer(moment)
 
-class Calender extends Component {
+class Calendar extends Component {
 
   constructor () {
     super()
     this.state = {
       events: [],
-      accg100events: [],
-      econ111events: [],
-      accg224events: [],
-      busl250events: [],
-      acst201events: [],
-      token: ''
+      // accg100events: [],
+      // econ111events: [],
+      // accg224events: [],
+      // busl250events: [],
+      // acst201events: []
     }
   };
 
@@ -57,7 +60,8 @@ class Calender extends Component {
           end: ceTime,
           title: event.summary,
           description: event.description,
-          location: event.location
+          location: event.location,
+          tag: event.organizer.displayName
           });
         });
 
@@ -73,7 +77,8 @@ class Calender extends Component {
         end: ceTime,
         title: event.summary,
         description: event.description,
-        location: event.location
+        location: event.location,
+        tag: event.organizer.displayName
         });
       });
 
@@ -89,7 +94,8 @@ class Calender extends Component {
         end: ceTime,
         title: event.summary,
         description: event.description,
-        location: event.location
+        location: event.location,
+        tag: event.organizer.displayName
         });
       });
 
@@ -105,7 +111,8 @@ class Calender extends Component {
         end: ceTime,
         title: event.summary,
         description: event.description,
-        location: event.location
+        location: event.location,
+        tag: event.organizer.displayName
         });
       });
 
@@ -121,9 +128,16 @@ class Calender extends Component {
         end: ceTime,
         title: event.summary,
         description: event.description,
-        location: event.location
+        location: event.location,
+        tag: event.organizer.displayName
         });
       });
+
+      this.setState({
+        events: accg100events.concat(econ111events).concat(accg224events).concat(busl250events).concat(acst201events)
+      })
+
+      console.log(this.state.events)
       // console.log(events);
       // this.setState({
       //   accg100events: accg100events,
@@ -147,9 +161,12 @@ class Calender extends Component {
         <BigCalendar
            popup
            style={{height: '800px'}}
-           events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
+          //  events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
+           events={this.state.events}
          />
      </div>
     );
   };
 };
+
+export default Calendar;

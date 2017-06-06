@@ -62,7 +62,9 @@ const fetchCalendar = function(cal) {
 			.end((err, resp) => {
 				if (!err) {
 
-					JSON.parse(resp.text).items.map(event => {
+					JSON.parse(resp.text)
+
+          .items.map(event => {
 						let sTime = event.start.date || event.start.dateTime;
 						let eTime = event.end.date || event.end.dateTime;
 
