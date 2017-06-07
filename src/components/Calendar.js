@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import FilterSubjects from './FilterSubjects';
 import BigCalendar from 'react-big-calendar';
 BigCalendar.momentLocalizer(moment)
+var _ = require('lodash');
 
 class Calendar extends Component {
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       events: [],
-      // accg100events: [],
-      // econ111events: [],
-      // accg224events: [],
-      // busl250events: [],
-      // acst201events: []
+      filteredEvents: [],
+      renderEvents: [],
     }
+    // this.events = this.events.bind(this);
+    this.filteredEvents = this.filteredEvents.bind(this);
   };
 
   componentDidMount () {
@@ -138,6 +139,11 @@ class Calendar extends Component {
       })
 
       console.log(this.state.events)
+
+      // function checkAccg100(transformer) {
+      // return transformer.team === ‘Autobot’;
+      //
+      // var filteredAccg100 =
       // console.log(events);
       // this.setState({
       //   accg100events: accg100events,
@@ -153,17 +159,38 @@ class Calendar extends Component {
       console.log(acst201events);
     }))
     .catch(error => console.log(error));
+
+
+  };
+
+  filteredEvents(subjects) {
+    this.setState({
+      filteredEvents: subjects
+    })
+    console.log("Look here!")
+    console.log(subjects)
   };
 
   render() {
+    let filteredCalendarEvents = this.state.events.filter(
+      (calendar) => {
+        return _.indexOf(this.state.filteredEvents, calendar.tag) !== -1;
+      }
+    );
+
     return (
-      <div className="Calender">
+      <div className="Calendar">
+        <div>
         <BigCalendar
            popup
            style={{height: '800px'}}
-          //  events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
-           events={this.state.events}
+          // events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
+           events={filteredCalendarEvents}
          />
+         <FilterSubjects
+           filteredEvents={this.filteredEvents}
+         />
+       </div>
      </div>
     );
   };
