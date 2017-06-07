@@ -7,14 +7,7 @@ class FilterSubjects extends Component {
     this.state = {
       selectedSubjects: [],
     }
-    // this.selectedSubjects = this.selectedSubjects.bind(this)
   };
-
-// //
-// filter
-// styles
-// service worker
-// deploy
 
   handleCheckboxChange(event) {
     if (event.target.checked) {
@@ -33,8 +26,7 @@ class FilterSubjects extends Component {
       this.setState({selectedSubjects: filteredArray})
       console.log(filteredArray)
     }
-
- this.props.filteredEvents(this.state.selectedSubjects)
+    this.props.filteredEvents(this.state.selectedSubjects)
   };
 
   render() {

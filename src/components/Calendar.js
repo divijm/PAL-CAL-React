@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../styles/Calendar.css';
 import axios from 'axios';
 import moment from 'moment';
 import FilterSubjects from './FilterSubjects';
@@ -170,10 +171,16 @@ class Calendar extends Component {
     console.log(subjects)
   };
 
+  eventColor(calendar, start, end, isSelected) {
+    return {
+      className: `eventColor_${calendar.tag}`
+    }
+  };
+
   render() {
     let filteredCalendarEvents = this.state.events.filter(
-      (calendar) => {
-        return _.indexOf(this.state.filteredEvents, calendar.tag) !== -1;
+      (event) => {
+        return _.indexOf(this.state.filteredEvents, event.tag) !== -1;
       }
     );
 
@@ -184,24 +191,25 @@ class Calendar extends Component {
     return (
       <div className="Calendar">
         <div>
-        <BigCalendar
-           popup
-           selectable
-           style={{height: '800px'}}
-           min={am8}
-           max={pm9}
-           views={['month', 'week', 'day']}
-           view={this.state.view}
-           onView={(view)=>{this.setState({view})}}
-           onSelectEvent={event => event.title}
-           onSelectEvent={(this.eventSelected)}
-           onSelectSlot={(this.slotSelected)} 
-          // events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
-           events={filteredCalendarEvents}
-         />
-         <FilterSubjects
+          <BigCalendar
+             popupOffset={30}
+             selectable
+             style={{height: '800px'}}
+             min={am8}
+             max={pm9}
+             views={['month', 'week', 'day']}
+             view={this.state.view}
+             eventPropGetter={this.eventColor}
+             onView={(view)=>{this.setState({view})}}
+             onSelectEvent={event =>
+               console.log([event.title], [event.description], [event.location], [event.start], [event.end])
+             }
+            // events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
+             events={filteredCalendarEvents}
+          />
+          <FilterSubjects
            filteredEvents={this.filteredEvents}
-         />
+          />
        </div>
      </div>
     );

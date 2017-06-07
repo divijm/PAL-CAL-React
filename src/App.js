@@ -7,6 +7,7 @@ import {
 import logo from './images/logo.svg';
 import './styles/App.css';
 import Calendar from './components/Calendar'
+import Charts from './components/Charts'
 
 class App extends Component {
 
@@ -42,6 +43,9 @@ class App extends Component {
          <br/>
          <br/>
          <hr/>
+
+         <Charts
+         />
 
      </div>
     );
