@@ -14,6 +14,7 @@ class Calendar extends Component {
       events: [],
       filteredEvents: [],
       renderEvents: [],
+      view: 'week',
     }
     // this.events = this.events.bind(this);
     this.filteredEvents = this.filteredEvents.bind(this);
@@ -159,8 +160,6 @@ class Calendar extends Component {
       console.log(acst201events);
     }))
     .catch(error => console.log(error));
-
-
   };
 
   filteredEvents(subjects) {
@@ -178,12 +177,25 @@ class Calendar extends Component {
       }
     );
 
+    let today = moment();
+    let am8 = today.set('hour', 8).set('minutes', 0).toDate();
+    let pm9 = today.set('hour', 21).set('minutes', 0).toDate();
+
     return (
       <div className="Calendar">
         <div>
         <BigCalendar
            popup
+           selectable
            style={{height: '800px'}}
+           min={am8}
+           max={pm9}
+           views={['month', 'week', 'day']}
+           view={this.state.view}
+           onView={(view)=>{this.setState({view})}}
+           onSelectEvent={event => event.title}
+           onSelectEvent={(this.eventSelected)}
+           onSelectSlot={(this.slotSelected)} 
           // events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
            events={filteredCalendarEvents}
          />
