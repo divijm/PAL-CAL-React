@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ChartistGraph from 'react-chartist';
-import { Row, Input } from 'react-materialize';
 
 class Charts extends Component {
   componentWillReceiveProps(nextProps) {
