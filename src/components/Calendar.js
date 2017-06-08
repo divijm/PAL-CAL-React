@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/Calendar.css';
+import { Card, Col, Row } from 'react-materialize';
 import axios from 'axios';
 import moment from 'moment';
 import FilterSubjects from './FilterSubjects';
@@ -190,27 +191,37 @@ class Calendar extends Component {
 
     return (
       <div className="Calendar">
-        <div>
-          <BigCalendar
-             popupOffset={30}
-             selectable
-             style={{height: '800px'}}
-             min={am8}
-             max={pm9}
-             views={['month', 'week', 'day']}
-             view={this.state.view}
-             eventPropGetter={this.eventColor}
-             onView={(view)=>{this.setState({view})}}
-             onSelectEvent={event =>
-               console.log([event.title], [event.description], [event.location], [event.start], [event.end])
-             }
-            // events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
-             events={filteredCalendarEvents}
-          />
+        <Col>
+          <Card
+            className=' grey lighten-4 black-text' textClassName='white-text' title='Timetable'>
+
           <FilterSubjects
-           filteredEvents={this.filteredEvents}
+             filteredEvents={this.filteredEvents}
           />
-       </div>
+
+          </Card>
+        </Col>
+
+        <Col>
+          <Card className='grey lighten-5 black-text'>
+            <BigCalendar
+               popupOffset={30}
+               selectable
+               style={{height: '800px'}}
+               min={am8}
+               max={pm9}
+               views={['month', 'week', 'day']}
+               view={this.state.view}
+               eventPropGetter={this.eventColor}
+               onView={(view)=>{this.setState({view})}}
+               onSelectEvent={event =>
+                 console.log([event.title], [event.description], [event.location], [event.start], [event.end])
+               }
+              // events={this.state.econ111events.concat(this.state.accg100events).concat(this.state.accg224events).concat(this.state.busl250events).concat(this.state.acst201events)}
+               events={filteredCalendarEvents}
+            />
+          </Card>
+        </Col>
      </div>
     );
   };

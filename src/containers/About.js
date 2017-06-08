@@ -4,6 +4,11 @@ import ChartistGraph from 'react-chartist';
 import Charts from '../components/Charts'
 
 class About extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { updateGraph: 0 }
+  }
+
   render() {
     return (
       <div>
@@ -12,32 +17,53 @@ class About extends Component {
         </div>
 
         <Collapsible popout>
-        	<CollapsibleItem header='ECON111' icon='filter_drama'>
-            <div>
-              <Tabs className='tab-demo z-depth-1'>
-            		<Tab title="Test 1" active><Charts /></Tab>
-            		<Tab title="Test 2">Test 2</Tab>
-            		<Tab title="Test 3">Test 3</Tab>
-            		<Tab title="Test 4">Test 4</Tab>
-              </Tabs>
-            </div>
+
+        	<CollapsibleItem header='ECON111' icon='arrow_drop_down'>
+            <Tabs onChange={() => this.setState({ updateGraph: this.state.updateGraph + 1 })} className='tab-demo z-depth-1'>
+            	<Tab title="Session 1, 2017" active> <Charts forceUpdate={this.state.updateGraph} /> </Tab>
+              <Tab title="Session 2, 2016">Test 2</Tab>
+              <Tab title="Session 1, 2016">Test 3</Tab>
+            </Tabs>
         		Lorem ipsum dolor sit amet.
         	</CollapsibleItem>
-        	<CollapsibleItem header='ACCG100' icon='place'>
+
+        	<CollapsibleItem header='ACCG100' icon='arrow_drop_down'>
+            <Tabs onChange={() => this.setState({ updateGraph: this.state.updateGraph + 1 })} className='tab-demo z-depth-1'>
+              <Tab title="Session 1, 2017" active> <Charts forceUpdate={this.state.updateGraph} /> </Tab>
+              <Tab title="Session 2, 2016">Test 2</Tab>
+              <Tab title="Session 1, 2016">Test 3</Tab>
+            </Tabs>
         		Lorem ipsum dolor sit amet.
         	</CollapsibleItem>
-        	<CollapsibleItem header='ACCG224' icon='whatshot'>
+
+        	<CollapsibleItem header='ACCG224' icon='arrow_drop_down'>
+            <Tabs onChange={() => this.setState({ updateGraph: this.state.updateGraph + 1 })} className='tab-demo z-depth-1'>
+              <Tab title="Session 1, 2017" active> <Charts forceUpdate={this.state.updateGraph} /> </Tab>
+              <Tab title="Session 2, 2016">Test 2</Tab>
+              <Tab title="Session 1, 2016">Test 3</Tab>
+            </Tabs>
         		Lorem ipsum dolor sit amet.
         	</CollapsibleItem>
-          <CollapsibleItem header='BUSL250' icon='whatshot'>
+
+          <CollapsibleItem header='BUSL250' icon='arrow_drop_down'>
+            <Tabs onChange={() => this.setState({ updateGraph: this.state.updateGraph + 1 })} className='tab-demo z-depth-1'>
+              <Tab title="Session 1, 2017" active> <Charts forceUpdate={this.state.updateGraph} /> </Tab>
+              <Tab title="Session 2, 2016">Test 2</Tab>
+              <Tab title="Session 1, 2016">Test 3</Tab>
+            </Tabs>
         		Lorem ipsum dolor sit amet.
         	</CollapsibleItem>
-          <CollapsibleItem header='ACST201' icon='whatshot'>
+
+          <CollapsibleItem header='ACST201' icon='arrow_drop_down'>
+            <Tabs onChange={() => this.setState({ updateGraph: this.state.updateGraph + 1 })} className='tab-demo z-depth-1'>
+              <Tab title="Session 1, 2017" active> <Charts forceUpdate={this.state.updateGraph} /> </Tab>
+              <Tab title="Session 2, 2016">Test 2</Tab>
+              <Tab title="Session 1, 2016">Test 3</Tab>
+            </Tabs>
         		Lorem ipsum dolor sit amet.
         	</CollapsibleItem>
+
         </Collapsible>
-
-
       </div>
     )
   }

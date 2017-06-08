@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Row, Input } from 'react-materialize';
 var _ = require('lodash');
+
 
 class FilterSubjects extends Component {
   constructor() {
@@ -32,12 +34,18 @@ class FilterSubjects extends Component {
   render() {
     return (
       <div>
-        <h1>{this.props.events}</h1>
-        <input type="checkbox" onChange={this.handleCheckboxChange.bind(this)} value="ECON111"/>ECON111
-        <input type="checkbox" onChange={this.handleCheckboxChange.bind(this)} value="ACCG100"/>ACCG100
-        <input type="checkbox" onChange={this.handleCheckboxChange.bind(this)} value="ACCG224"/>ACCG224
-        <input type="checkbox" onChange={this.handleCheckboxChange.bind(this)} value="BUSL250"/>BUSL250
-        <input type="checkbox" onChange={this.handleCheckboxChange.bind(this)} value="ACST201"/>ACST201
+        <div>
+          <h1>{this.props.events}</h1>
+        </div>
+        <div>
+          <Row>
+        		<Input type='checkbox' value='ECON111' onChange={this.handleCheckboxChange.bind(this)} label='ECON111' />
+            <Input type='checkbox' value='ACCG100' onChange={this.handleCheckboxChange.bind(this)} label='ACCG100' defaultValue='checked' />
+            <Input type='checkbox' value='ACCG224' onChange={this.handleCheckboxChange.bind(this)} label='ACCG224' />
+            <Input type='checkbox' value='BUSL250' onChange={this.handleCheckboxChange.bind(this)} label='BUSL250' />
+            <Input type='checkbox' value='ACST201' onChange={this.handleCheckboxChange.bind(this)} label='ACST201' />
+          </Row>
+        </div>
       </div>
     )
   }

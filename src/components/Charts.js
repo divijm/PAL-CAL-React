@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import ChartistGraph from 'react-chartist';
+import { Row, Input } from 'react-materialize';
 
 class Charts extends Component {
+  componentWillReceiveProps(nextProps) {
+    this.forceUpdate();
+  }
+
   render() {
     var lineChartData = {
         labels: ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8', 'W9', 'W10'],
